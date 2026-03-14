@@ -1,2 +1,2 @@
 # skillLink
-this is our DBMS min project as a part of our project based learning 
+this is our DBMS mini project as a part of our project based learning 
