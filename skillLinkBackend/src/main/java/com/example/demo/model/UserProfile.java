@@ -1,22 +1,25 @@
+package com.example.demo.model;
+
 import jakarta.persistence.*;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="UserProfile")
+@Table(name="user_profile")
 @Data
 public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer profileId;
 
-    private Integer userId;
-    private String LinkdinLink;
+    private String linkedinLink;
     private String githubLink;
     private String bio;
     private String phone;
     private String profileImage;
 
     @OneToOne
-    @JoinColumn(name="userID") //this is the code for the foreign key in java
+    @JoinColumn(name="userID")
+    @JsonIgnore
     private User user;
 }

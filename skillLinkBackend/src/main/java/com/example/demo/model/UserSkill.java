@@ -1,15 +1,15 @@
+package com.example.demo.model;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Data
-public class userSkill {
+public class UserSkill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userSkillId;
 
-    private Integer userID;
-    private Integer skillID;
     private String proficiency;
     private Integer experience;
 
@@ -20,5 +20,4 @@ public class userSkill {
     @ManyToOne
     @JoinColumn(name="skillID")
     private Skill skill;
-
 }

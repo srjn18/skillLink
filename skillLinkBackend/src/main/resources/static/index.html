@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Link - Skill Exchange</title>
+    <!-- Modern Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- GLOBAL NAVBAR -->
+    <nav id="navbar" class="hidden">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fa-solid fa-link logo-icon"></i>
+                <span class="logo-text">Skill Link</span>
+            </div>
+            
+            <div class="nav-search">
+                <i class="fa-solid fa-search search-icon"></i>
+                <select id="search-type">
+                    <option value="name">By Name</option>
+                    <option value="skill">By Skill</option>
+                </select>
+                <input type="text" id="global-search" placeholder="Search people or skills..." autocomplete="off" style="padding-left:120px;">
+                <div id="search-dropdown" class="hidden"></div>
+            </div>
+
+            <ul class="nav-links">
+                <li class="nav-item active" data-target="dashboard-view">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </li>
+                <li class="nav-item" data-target="profile-view">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </li>
+            </ul>
+            <div class="nav-profile-menu">
+                <img src="https://ui-avatars.com/api/?name=User&background=0a66c2&color=fff" alt="Profile" class="nav-avatar" id="nav-avatar-img">
+                <div class="dropdown-content">
+                    <button id="logout-btn">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main id="app-container">
+
+        <!-- LOGIN / SIGNUP VIEW -->
+        <section id="login-view" class="view-section active">
+            <div class="auth-wrapper">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <i class="fa-solid fa-link logo-icon-large"></i>
+                        <h1>Skill Link</h1>
+                        <p>Welcome to your professional community</p>
+                    </div>
+
+                    <form id="login-form">
+                        <div class="input-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <div class="forgot-password" style="text-align: right; margin-bottom: 12px; font-size: 12px;">
+                            <a href="#" id="show-reset-btn">Forgot Password?</a>
+                        </div>
+                        <div id="login-error" class="error-msg hidden">Invalid credentials.</div>
+                        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                    </form>
+
+                    <form id="reset-password-form" class="hidden">
+                        <div class="input-group">
+                            <label for="reset-email">Enter your email</label>
+                            <input type="email" id="reset-email" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="reset-new-password">New Password</label>
+                            <input type="password" id="reset-new-password" required minlength="6">
+                        </div>
+                        <div id="reset-error" class="error-msg hidden">User not found.</div>
+                        <div id="reset-success" style="color: var(--success-color); font-size: 12px; margin-bottom: 12px; font-weight: 600;" class="hidden">Password reset successful! Sign in now.</div>
+                        <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
+                        <div class="auth-toggle">
+                            <a href="#" id="back-to-login-btn">Back to Sign in</a>
+                        </div>
+                    </form>
+
+                    <form id="signup-form" class="hidden">
+                        <div class="input-group">
+                            <label for="signup-name">Full Name</label>
+                            <input type="text" id="signup-name" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" required minlength="6">
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-college">College name</label>
+                            <input type="text" id="signup-college" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-linkedin">LinkedIn (URL)</label>
+                            <input type="url" id="signup-linkedin" placeholder="https://linkedin.com/in/username" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="signup-github">GitHub (URL)</label>
+                            <input type="url" id="signup-github" placeholder="https://github.com/username" required>
+                        </div>
+                        <div id="signup-error" class="error-msg hidden">Email already in use.</div>
+                        <button type="submit" class="btn btn-primary btn-block">Agree & Join</button>
+                    </form>
+
+                    <div class="auth-toggle">
+                        <span id="auth-toggle-text">New to Skill Link?</span>
+                        <a href="#" id="auth-toggle-btn">Join now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- DASHBOARD VIEW -->
+        <section id="dashboard-view" class="view-section hidden">
+            <div class="container grid-layout">
+                
+                <!-- Left Sidebar: Profile Summary -->
+                <aside class="sidebar-left">
+                    <div class="card profile-summary-card">
+                        <div class="profile-summary-inner">
+                            <div class="profile-bg"></div>
+                            <div class="profile-summary-body">
+                                <img src="https://ui-avatars.com/api/?name=User&background=1a56db&color=fff" alt="User" class="profile-avatar-large" id="dash-avatar">
+                                <h2 id="dash-name">John Doe</h2>
+                                <p class="headline" id="dash-bio">Software Engineering Student</p>
+                                <div class="stats">
+                                    <div class="stat-item">
+                                        <span><i class="fa-solid fa-paper-plane"></i> Skill Requests</span>
+                                        <span class="stat-value" id="dash-req-count">0</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span><i class="fa-solid fa-check-circle"></i> Skills Exchanged</span>
+                                        <span class="stat-value">5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Center: Feed / Matches -->
+                <div class="main-feed">
+                    <div class="card" style="border-radius:14px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,0,0.10);">
+                        <div class="feed-header">
+                            <h3>Suggested Skill Matches</h3>
+                            <p>Connect with peers to exchange skills.</p>
+                        </div>
+                        <!-- Feed Container populated by JS -->
+                        <div id="feed-container"></div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar: Requests -->
+                <aside class="sidebar-right">
+                    <div class="card requests-card">
+                        <h3><i class="fa-solid fa-inbox" style="color:var(--primary)"></i> Incoming Requests</h3>
+                        <div id="requests-container">
+                            <div class="empty-state">
+                                <i class="fa-solid fa-inbox"></i>
+                                No incoming requests.
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+        <!-- PROFILE / SKILL MANAGEMENT VIEW -->
+        <section id="profile-view" class="view-section hidden">
+            <div class="container profile-grid-layout">
+                <div class="main-profile">
+                    <!-- Profile Header -->
+                    <div class="card profile-header-card">
+                        <div class="profile-bg-large"></div>
+                        <div class="profile-header-content">
+                            <img src="https://ui-avatars.com/api/?name=User&background=0a66c2&color=fff" alt="User" class="profile-avatar-xl">
+                            <h2 id="prof-name">John Doe</h2>
+                            <p class="headline" id="prof-bio">Software Engineering Student at <span id="prof-college">XYZ University</span></p>
+                            <p class="sub-headline"><i class="fa-solid fa-graduation-cap"></i> Branch: <span id="prof-branch">CSE</span> | Semester: <span id="prof-sem">4</span></p>
+                            
+                            <div class="profile-links">
+                                <a href="#" target="_blank" id="prof-github"><i class="fa-brands fa-github"></i> GitHub</a>
+                                <a href="#" target="_blank" id="prof-linkedin"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                            </div>
+                            
+                            <button class="btn btn-outline" id="edit-profile-btn" style="margin-top: 15px;"><i class="fa-solid fa-pen"></i> Edit Profile</button>
+                            
+                            <!-- Edit Profile Form (Hidden by default) -->
+                            <form id="edit-profile-form" class="hidden" style="margin-top: 15px; text-align: left;">
+                                <div class="input-group">
+                                    <label for="edit-bio">Headline / Bio</label>
+                                    <input type="text" id="edit-bio" placeholder="Software Engineering Student">
+                                </div>
+                                <div class="input-group" style="display:flex; gap:10px;">
+                                    <div style="flex:1;">
+                                        <label for="edit-branch">Branch</label>
+                                        <input type="text" id="edit-branch" placeholder="CSE">
+                                    </div>
+                                    <div style="flex:1;">
+                                        <label for="edit-sem">Semester</label>
+                                        <input type="text" id="edit-sem" placeholder="4">
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="edit-image-url">Profile Image URL</label>
+                                    <input type="url" id="edit-image-url" placeholder="https://imgur.com/your-image.jpg">
+                                </div>
+                                <div class="input-group">
+                                    <label for="edit-linkedin">LinkedIn URL</label>
+                                    <input type="url" id="edit-linkedin" placeholder="https://linkedin.com/in/username">
+                                </div>
+                                <div class="input-group">
+                                    <label for="edit-github">GitHub URL</label>
+                                    <input type="url" id="edit-github" placeholder="https://github.com/username">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Profile</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-edit-btn">Cancel</button>
+                                <div id="edit-profile-error" class="error-msg hidden">Failed to update profile.</div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Skills Management -->
+                    <div class="card skills-card">
+                        <div class="skills-header">
+                            <h3>My Skills</h3>
+                            <button class="btn btn-outline" id="add-skill-btn"><i class="fa-solid fa-plus"></i> Add Skill</button>
+                        </div>
+                        
+                        <!-- Add Skill Form (Hidden by default) -->
+                        <form id="add-skill-form" class="hidden">
+                            <div class="form-row">
+                                <input type="text" id="skill-name-input" placeholder="e.g. Java, React, Figma" required>
+                                <select id="skill-proficiency" required>
+                                    <option value="" disabled selected>Proficiency</option>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Expert">Expert</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-skill-btn">Cancel</button>
+                            </div>
+                        </form>
+
+                        <!-- List of Skills -->
+                        <div id="skills-list" class="skills-list-container">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FLOATING CHAT WIDGET -->
+    <div id="chat-widget" class="hidden">
+        <div class="chat-header">
+            <span id="chat-target-name">Chat</span>
+            <button id="close-chat-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="chat-messages"></div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off">
+            <button id="send-chat-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <style>
+        #chat-widget {
+            position: fixed; bottom: 20px; right: 20px; width: 320px; height: 400px;
+            background: #fff; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex; flex-direction: column; z-index: 1000;
+        }
+        .chat-header {
+            background: #0a66c2; color: #fff; padding: 12px; font-weight: 600;
+            border-radius: 8px 8px 0 0; display: flex; justify-content: space-between;
+        }
+        .chat-header button { background: none; border: none; color: #fff; cursor: pointer; }
+        #chat-messages {
+            flex: 1; padding: 10px; overflow-y: auto; background: #f3f2ef;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .chat-msg { max-width: 80%; padding: 8px; border-radius: 6px; font-size: 14px; word-wrap:break-word;}
+        .msg-me { align-self: flex-end; background: #0a66c2; color: #fff; }
+        .msg-them { align-self: flex-start; background: #fff; color: #333; border: 1px solid #ddd; }
+        .msg-author { font-size: 10px; opacity: 0.8; margin-bottom: 2px; }
+        .chat-input-area { display: flex; padding: 10px; border-top: 1px solid #ddd; }
+        #chat-input { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px; outline:none; }
+        #send-chat-btn { background: #0a66c2; color: #fff; border: none; padding: 8px 12px; margin-left: 5px; border-radius: 4px; cursor: pointer; }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

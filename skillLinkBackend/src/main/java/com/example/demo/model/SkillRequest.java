@@ -1,3 +1,5 @@
+package com.example.demo.model;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -6,23 +8,19 @@ import java.sql.Timestamp;
 
 @Entity
 @Data
-public class skillRequest {
+public class SkillRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer requestID;
+    private Integer requestId;
 
-    private String senderID;
-    private String receiverID;
-    private String skillID;
     @CreationTimestamp
     private Timestamp requestDate;
     private String message;
     private String status;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="skillID")
     private Skill skill;
-
 
     @ManyToOne
     @JoinColumn(name = "senderID")
@@ -31,5 +29,4 @@ public class skillRequest {
     @ManyToOne
     @JoinColumn(name = "receiverID")
     private User receiver;
-
 }
